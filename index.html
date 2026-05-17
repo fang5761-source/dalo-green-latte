@@ -3,7 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>大樂養生管家 - Green Latte</title>
+    <title>大樂綠拿鐵管家 - Green Latte</title>
+    
+    <!-- 召喚專屬 Icon 與原生 APP 體驗的魔法咒語 -->
+    <link rel="icon" href="icon.jpg">
+    <link rel="apple-touch-icon" href="icon.jpg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="大樂管家">
+    
+    <!-- 召喚專屬 Icon (已更新為 png) -->
+    <link rel="icon" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -208,7 +220,8 @@
                         </div>
                     </button>
 
-                    <button class="ceramic-card p-4 flex flex-col gap-3 text-left" onclick="alert('體質偵探功能陸續解鎖中！')">
+                    <!-- 進入 detective 畫面 -->
+                    <button onclick="switchScreen('detective')" class="ceramic-card p-4 flex flex-col gap-3 text-left transition-all active:scale-95">
                         <div class="w-10 h-10 rounded-xl bg-[var(--wabi-cream)] flex items-center justify-center text-[var(--wabi-green)] text-lg border border-[var(--wabi-gold)]/20 shadow-inner">
                             <i class="fa-solid fa-magnifying-glass-chart"></i>
                         </div>
@@ -339,6 +352,102 @@
         </div>
 
         <!-- ========================================== -->
+        <!-- 畫面四：體質偵探 (探索身體流動) -->
+        <!-- ========================================== -->
+        <div id="screen-detective" class="screen">
+            <div class="top-bar">
+                <div class="font-bold text-[var(--wabi-navy)] text-lg">體質偵探</div>
+                <div class="text-[var(--wabi-gold)] text-xl"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+            </div>
+
+            <div class="p-6 pb-10">
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-[var(--wabi-gold)] mb-6 text-center">
+                    <div class="w-12 h-12 rounded-full bg-[var(--wabi-navy)] text-[var(--wabi-gold)] flex items-center justify-center text-xl mx-auto mb-3 shadow-md">
+                        <i class="fa-solid fa-spa"></i>
+                    </div>
+                    <h3 class="font-bold text-[var(--wabi-navy)] mb-2">傾聽身體的聲音</h3>
+                    <p class="text-[var(--wabi-brown)] text-sm leading-relaxed">
+                        姊姊，這不是考試，憑直覺滑動就好。<br>讓我們來看看今天身體的「氣候」是如何呢？
+                    </p>
+                </div>
+
+                <!-- 互動滑桿區塊 -->
+                <div id="detective-questions" class="space-y-6">
+                    <!-- Q1: 溫度感受 -->
+                    <div class="bg-[rgba(255,252,245,0.9)] rounded-2xl p-5 border border-[var(--wabi-gold)]/30 shadow-sm">
+                        <h4 class="font-bold text-[var(--wabi-navy)] mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-temperature-half text-[var(--wabi-green)]"></i> 今天的溫度感知
+                        </h4>
+                        <input type="range" id="q-temp" min="0" max="100" value="50" class="w-full accent-[var(--wabi-navy)] mb-2 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-xs font-bold text-slate-400 mt-2">
+                            <span class="text-blue-500">❄️ 怕冷想穿外套</span>
+                            <span>剛剛好</span>
+                            <span class="text-red-400">🔥 怕熱易流汗</span>
+                        </div>
+                    </div>
+
+                    <!-- Q2: 精神濕度 -->
+                    <div class="bg-[rgba(255,252,245,0.9)] rounded-2xl p-5 border border-[var(--wabi-gold)]/30 shadow-sm">
+                        <h4 class="font-bold text-[var(--wabi-navy)] mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-battery-half text-[var(--wabi-green)]"></i> 晨間的電力狀態
+                        </h4>
+                        <input type="range" id="q-energy" min="0" max="100" value="50" class="w-full accent-[var(--wabi-navy)] mb-2 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-xs font-bold text-slate-400 mt-2">
+                            <span class="text-slate-500">🪨 沉重想賴床</span>
+                            <span>還算清醒</span>
+                            <span class="text-amber-500">⚡ 電力充沛</span>
+                        </div>
+                    </div>
+
+                    <!-- Q3: 消化順暢度 (按鈕選項) -->
+                    <div class="bg-[rgba(255,252,245,0.9)] rounded-2xl p-5 border border-[var(--wabi-gold)]/30 shadow-sm">
+                        <h4 class="font-bold text-[var(--wabi-navy)] mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-wind text-[var(--wabi-green)]"></i> 腸胃的流動感
+                        </h4>
+                        <div class="flex gap-2">
+                            <button class="digestion-btn flex-1 py-2 border border-[var(--wabi-gold)] rounded-xl text-sm font-bold text-[var(--wabi-brown)] transition-colors active" onclick="setDigestion(this, '卡卡')">卡卡便祕</button>
+                            <button class="digestion-btn flex-1 py-2 border border-[var(--wabi-gold)] rounded-xl text-sm font-bold text-[var(--wabi-brown)] transition-colors" onclick="setDigestion(this, '順暢')">非常順暢</button>
+                            <button class="digestion-btn flex-1 py-2 border border-[var(--wabi-gold)] rounded-xl text-sm font-bold text-[var(--wabi-brown)] transition-colors" onclick="setDigestion(this, '軟散')">容易拉肚子</button>
+                        </div>
+                    </div>
+
+                    <button onclick="analyzeBody()" class="w-full py-4 bg-[var(--wabi-navy)] text-[var(--wabi-gold)] rounded-xl font-bold text-lg shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> 讓大樂分析
+                    </button>
+                </div>
+
+                <!-- 偵探結果區塊 (初始隱藏) -->
+                <div id="detective-result" class="hidden mt-6 animate-[fadeIn_0.5s_ease-out]">
+                    <div class="bg-white rounded-3xl p-6 shadow-xl border-2 border-[var(--wabi-gold)] relative overflow-hidden">
+                        <!-- 裝飾背景 -->
+                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-[var(--wabi-beige)] rounded-full opacity-30"></div>
+                        
+                        <h3 class="text-sm text-slate-500 font-bold mb-1">今日流動報告</h3>
+                        <h2 class="text-2xl font-bold text-[var(--wabi-navy)] font-serif mb-4 pb-3 border-b border-[var(--wabi-gold)]/30" id="result-title">
+                            微寒微濕的小精靈
+                        </h2>
+                        
+                        <p class="text-[var(--wabi-brown)] leading-relaxed mb-5" id="result-desc">
+                            姊姊今天似乎吹了點冷風，身體有點沉重呢。不用擔心，大樂已經幫妳把今天的綠拿鐵基底換成溫豆漿，並加入了去寒的核桃！
+                        </p>
+                        
+                        <div class="bg-[#Fdfbf7] p-4 rounded-xl border border-[var(--wabi-gold)]/20">
+                            <h4 class="font-bold text-[var(--wabi-green)] text-sm mb-2"><i class="fa-solid fa-prescription-bottle-medical"></i> 今日配方魔法微調</h4>
+                            <ul class="text-sm text-[var(--wabi-brown)] space-y-2" id="result-actions">
+                                <li><i class="fa-solid fa-arrow-right text-[var(--wabi-gold)] mr-1"></i> 水溫強制鎖定 40 度</li>
+                                <li><i class="fa-solid fa-arrow-right text-[var(--wabi-gold)] mr-1"></i> 額外加入 3 顆核桃去寒</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <button onclick="applyToRecipe()" class="w-full py-4 bg-[var(--wabi-green)] text-white rounded-xl font-bold text-lg shadow-lg active:scale-95 transition-transform mt-6 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-blender"></i> 將微調套用至今日打鐵
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
         <!-- 底部全局導覽列 -->
         <!-- ========================================== -->
         <nav class="bottom-nav" id="bottomNav">
@@ -370,9 +479,17 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
             // 顯示目標畫面
-            document.getElementById('screen-' + screenName).classList.add('active');
-            // 點亮對應的導航按鈕
-            document.getElementById('nav-' + screenName).classList.add('active');
+            const targetScreen = document.getElementById('screen-' + screenName);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+            }
+            
+            // 點亮對應的導航按鈕 (如果該按鈕存在)
+            // 解決沒有底部按鈕的畫面 (如體質偵探) 點擊會報錯的問題
+            const targetNav = document.getElementById('nav-' + screenName);
+            if (targetNav) {
+                targetNav.classList.add('active');
+            }
             
             // 如果畫面有需要初始化的，可以在這裡觸發
             if(screenName === 'recipe') renderRecipe();
@@ -520,6 +637,74 @@
             } else {
                 itemElem.classList.remove('opacity-50', 'grayscale', 'bg-[#F0EDE5]');
             }
+        }
+
+        // -----------------------------------------
+        // 5. 體質偵探邏輯
+        // -----------------------------------------
+        let currentDigestion = '卡卡';
+
+        function setDigestion(btn, state) {
+            currentDigestion = state;
+            document.querySelectorAll('.digestion-btn').forEach(b => {
+                b.classList.remove('bg-[var(--wabi-navy)]', 'text-[var(--wabi-gold)]');
+                b.classList.add('text-[var(--wabi-brown)]');
+            });
+            btn.classList.add('bg-[var(--wabi-navy)]', 'text-[var(--wabi-gold)]');
+            btn.classList.remove('text-[var(--wabi-brown)]');
+        }
+
+        function analyzeBody() {
+            const tempVal = document.getElementById('q-temp').value;
+            const energyVal = document.getElementById('q-energy').value;
+            
+            let title = "";
+            let desc = "";
+            let actions = "";
+
+            // 簡單的判定邏輯
+            if (tempVal < 40 && energyVal < 40) {
+                title = "❄️ 微寒沉重的小精靈";
+                desc = "姊姊今天似乎吹了點冷風，身體流動比較緩慢喔。不用擔心，大樂來幫妳補充溫暖的能量！";
+                actions = `
+                    <li><i class="fa-solid fa-arrow-right text-[var(--wabi-gold)] mr-1"></i> 水溫強制鎖定 45 度</li>
+                    <li><i class="fa-solid fa-arrow-right text-[var(--wabi-gold)] mr-1"></i> 堅果區改為：生核桃 5 顆 (強效去寒)</li>
+                    <li><i class="fa-solid fa-arrow-right text-[var(--wabi-gold)] mr-1"></i> 蔬菜務必確實燙熟</li>
+                `;
+            } else if (tempVal > 60 && currentDigestion === '卡卡') {
+                title = "🔥 燥熱缺水的小火山";
+                desc = "感覺今天體內有一點點小火氣，腸道也比較乾澀卡卡呢。我們多加點水份豐富的食材來滋潤一下吧！";
+                actions = `
+                    <li><i class="fa-solid fa-arrow-right text-[var(--wabi-gold)] mr-1"></i> 水果區增加：奇異果半顆 (解便祕)</li>
+                    <li><i class="fa-solid fa-arrow-right text-[var(--wabi-gold)] mr-1"></i> 粉類建議加入：奇亞籽 1 匙 (增加腸道滑順)</li>
+                `;
+            } else {
+                title = "🌿 平和順暢的春風";
+                desc = "太棒了！姊姊今天的身體狀態非常平衡，就像春天的微風一樣舒服。維持目前的極簡配方就非常完美囉！";
+                actions = `
+                    <li><i class="fa-solid fa-arrow-right text-[var(--wabi-gold)] mr-1"></i> 維持標準大樂配方</li>
+                    <li><i class="fa-solid fa-arrow-right text-[var(--wabi-gold)] mr-1"></i> 喝的時候記得帶著微笑咀嚼喔</li>
+                `;
+            }
+
+            document.getElementById('result-title').innerText = title;
+            document.getElementById('result-desc').innerText = desc;
+            document.getElementById('result-actions').innerHTML = actions;
+
+            // 隱藏問題，顯示結果
+            document.getElementById('detective-questions').classList.add('hidden');
+            document.getElementById('detective-result').classList.remove('hidden');
+        }
+
+        function applyToRecipe() {
+            alert('✨ 魔法微調已成功套用至今日配方！');
+            switchScreen('recipe');
+            
+            // 重置偵探畫面，方便下次測驗
+            setTimeout(() => {
+                document.getElementById('detective-questions').classList.remove('hidden');
+                document.getElementById('detective-result').classList.add('hidden');
+            }, 500);
         }
 
         // 初始化
