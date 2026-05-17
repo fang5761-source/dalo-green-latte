@@ -6,11 +6,10 @@
     <title>大樂綠拿鐵管家 - Green Latte</title>
     
     <!-- 分享到 LINE/FB/簡訊 時顯示預覽圖與標題的魔法咒語 (Open Graph) -->
-    <!-- 注意：請將下方的 [妳的帳號] 替換成姊姊真實的 GitHub 帳號 -->
     <meta property="og:title" content="大樂綠拿鐵管家">
     <meta property="og:description" content="給姊姊的專屬綠拿鐵健康提案，陪妳一起探索身體的流動🌿">
-    <meta property="og:image" content="https://[妳的帳號].github.io/dalo-green-latte/icon.png">
-    <meta property="og:url" content="https://[妳的帳號].github.io/dalo-green-latte/">
+    <meta property="og:image" content="https://fang5761-source.github.io/dalo-green-latte/icon.png?v=3">
+    <meta property="og:url" content="https://fang5761-source.github.io/dalo-green-latte/">
     <meta property="og:type" content="website">
     
     <!-- 召喚專屬 Icon 與原生 APP 體驗的魔法咒語 -->
@@ -172,8 +171,9 @@
                     <i class="fa-solid fa-leaf"></i>
                     <span class="font-bold text-sm tracking-widest" id="userNameDisplay">芳姊姊</span>
                 </div>
-                <button class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg pointer-events-auto border border-[var(--wabi-gold)]/30">
-                    <i class="fa-solid fa-bell text-[var(--wabi-gold)]"></i>
+                <!-- 設定齒輪按鈕 -->
+                <button onclick="switchScreen('settings')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg pointer-events-auto border border-[var(--wabi-gold)]/30 active:scale-90 transition-transform">
+                    <i class="fa-solid fa-gear text-[var(--wabi-gold)]"></i>
                 </button>
             </div>
 
@@ -454,6 +454,65 @@
         </div>
 
         <!-- ========================================== -->
+        <!-- 畫面五：設定與版本 (Settings) -->
+        <!-- ========================================== -->
+        <div id="screen-settings" class="screen">
+            <div class="top-bar">
+                <button onclick="switchScreen('home')" class="text-[var(--wabi-gold)] text-xl w-8 h-8 flex items-center justify-center">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="font-bold text-[var(--wabi-navy)] text-lg">系統設定</div>
+                <div class="w-8"></div> <!-- 排版平衡用 -->
+            </div>
+            
+            <div class="p-6">
+                <!-- App 資訊區塊 -->
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-[var(--wabi-gold)] mb-6 text-center relative overflow-hidden">
+                    <!-- 裝飾背景 -->
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-[var(--wabi-beige)] rounded-full opacity-20"></div>
+                    
+                    <div class="w-20 h-20 mx-auto bg-[var(--wabi-cream)] rounded-2xl flex items-center justify-center border border-[var(--wabi-gold)]/50 mb-4 shadow-inner">
+                        <i class="fa-solid fa-leaf text-4xl text-[var(--wabi-green)]"></i>
+                    </div>
+                    <h3 class="font-bold text-[var(--wabi-navy)] text-xl mb-1">大樂綠拿鐵管家</h3>
+                    <p class="text-[var(--wabi-brown)] text-sm mb-5">專屬姊姊的健康陪伴</p>
+                    
+                    <div class="inline-flex items-center gap-2 bg-[var(--wabi-beige)]/30 px-4 py-2 rounded-full text-[var(--wabi-navy)] font-bold text-sm mb-6 border border-[var(--wabi-gold)]/20">
+                        <i class="fa-solid fa-code-branch"></i> 目前版本：<span id="current-version-text">v1.0.0</span>
+                    </div>
+                    
+                    <!-- 檢查更新按鈕區 -->
+                    <div id="update-check-area">
+                        <button onclick="checkVersion()" class="w-full py-3.5 bg-white border-2 border-[var(--wabi-navy)] text-[var(--wabi-navy)] rounded-xl font-bold text-md shadow-sm active:scale-95 transition-transform flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-arrows-rotate"></i> 檢查版本更新
+                        </button>
+                    </div>
+                    
+                    <!-- 發現新版本狀態 (初始隱藏) -->
+                    <div id="new-version-area" class="hidden mt-4 pt-4 border-t border-[var(--wabi-gold)]/30">
+                        <p class="text-[var(--wabi-green)] font-bold text-sm mb-3">✨ 發現新版本：v1.1.0！</p>
+                        <button onclick="updateSystem()" class="w-full py-3.5 bg-[var(--wabi-navy)] text-[var(--wabi-gold)] rounded-xl font-bold text-md shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-down"></i> 立即更新並重啟
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 開發者與環境資訊 -->
+                <div class="bg-[rgba(255,252,245,0.9)] rounded-2xl p-5 border border-[var(--wabi-gold)]/30 shadow-sm">
+                     <h4 class="font-bold text-[var(--wabi-navy)] mb-3 text-sm"><i class="fa-solid fa-circle-info mr-2"></i>系統資訊</h4>
+                     <div class="flex justify-between items-center py-2 border-b border-[var(--wabi-gold)]/20 text-sm text-[var(--wabi-brown)]">
+                         <span>開發者</span>
+                         <span class="font-bold">大樂 AI</span>
+                     </div>
+                     <div class="flex justify-between items-center py-2 text-sm text-[var(--wabi-brown)]">
+                         <span>環境狀態</span>
+                         <span class="font-bold text-[var(--wabi-green)]">連線正常</span>
+                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
         <!-- 底部全局導覽列 -->
         <!-- ========================================== -->
         <nav class="bottom-nav" id="bottomNav">
@@ -491,14 +550,22 @@
             }
             
             // 點亮對應的導航按鈕 (如果該按鈕存在)
-            // 解決沒有底部按鈕的畫面 (如體質偵探) 點擊會報錯的問題
             const targetNav = document.getElementById('nav-' + screenName);
             if (targetNav) {
                 targetNav.classList.add('active');
             }
             
-            // 如果畫面有需要初始化的，可以在這裡觸發
+            // 隱藏/顯示底部導覽列邏輯 (例如在設定頁不需要看到底部導航)
+            const bottomNav = document.getElementById('bottomNav');
+            if (screenName === 'settings' || screenName === 'detective') {
+                bottomNav.classList.add('hidden');
+            } else {
+                bottomNav.classList.remove('hidden');
+            }
+            
+            // 畫面特定初始化
             if(screenName === 'recipe') renderRecipe();
+            if(screenName === 'settings') resetUpdateUI();
         }
 
         // -----------------------------------------
@@ -508,12 +575,12 @@
         function finishTask() {
             peaceScore += 10;
             document.getElementById('peaceScore').innerText = '+' + peaceScore;
-            alert('🌿 打鐵完成！今日平和 +10\n姊姊，妳今天也好好照顧了自己，謝謝妳的堅持。');
+            alert('🌿 打鐵完成！今日平和 +10\\n姊姊，妳今天也好好照顧了自己，謝謝妳的堅持。');
             switchScreen('home'); // 打卡完自動回到首頁
         }
 
         // -----------------------------------------
-        // 3. 配方邏輯 (從 dalo_recipe_interaction 整合)
+        // 3. 配方邏輯 
         // -----------------------------------------
         const recipeData = {
             small: {
@@ -628,7 +695,7 @@
         }
 
         // -----------------------------------------
-        // 4. 採買清單邏輯 (從 dalo_shopping_list 整合)
+        // 4. 採買清單邏輯 
         // -----------------------------------------
         const shopBaseQty = { apple: 7, yam: 2 };
         function updateShopItem(item, isChecked, deductQty) {
@@ -668,7 +735,6 @@
             let desc = "";
             let actions = "";
 
-            // 簡單的判定邏輯
             if (tempVal < 40 && energyVal < 40) {
                 title = "❄️ 微寒沉重的小精靈";
                 desc = "姊姊今天似乎吹了點冷風，身體流動比較緩慢喔。不用擔心，大樂來幫妳補充溫暖的能量！";
@@ -697,7 +763,6 @@
             document.getElementById('result-desc').innerText = desc;
             document.getElementById('result-actions').innerHTML = actions;
 
-            // 隱藏問題，顯示結果
             document.getElementById('detective-questions').classList.add('hidden');
             document.getElementById('detective-result').classList.remove('hidden');
         }
@@ -706,11 +771,52 @@
             alert('✨ 魔法微調已成功套用至今日配方！');
             switchScreen('recipe');
             
-            // 重置偵探畫面，方便下次測驗
             setTimeout(() => {
                 document.getElementById('detective-questions').classList.remove('hidden');
                 document.getElementById('detective-result').classList.add('hidden');
             }, 500);
+        }
+
+        // -----------------------------------------
+        // 6. 設定與版本更新邏輯
+        // -----------------------------------------
+        const currentVersion = "v1.0.0";
+        
+        // 網頁載入時寫入版本號
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('current-version-text').innerText = currentVersion;
+        });
+
+        // 每次進入設定頁時，重置更新按鈕狀態
+        function resetUpdateUI() {
+            const btnArea = document.getElementById('update-check-area');
+            const newVerArea = document.getElementById('new-version-area');
+            
+            btnArea.classList.remove('hidden');
+            btnArea.innerHTML = `
+                <button onclick="checkVersion()" class="w-full py-3.5 bg-white border-2 border-[var(--wabi-navy)] text-[var(--wabi-navy)] rounded-xl font-bold text-md shadow-sm active:scale-95 transition-transform flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrows-rotate"></i> 檢查版本更新
+                </button>
+            `;
+            newVerArea.classList.add('hidden');
+        }
+
+        function checkVersion() {
+            const btnArea = document.getElementById('update-check-area');
+            // 點擊後變成轉圈圈載入狀態
+            btnArea.innerHTML = `<div class="py-3.5 text-[var(--wabi-brown)] font-bold text-sm animate-pulse flex items-center justify-center"><i class="fa-solid fa-spinner fa-spin mr-2"></i> 大樂正在連線檢查中...</div>`;
+            
+            // 模擬網路延遲 1.5 秒
+            setTimeout(() => {
+                btnArea.classList.add('hidden');
+                document.getElementById('new-version-area').classList.remove('hidden');
+            }, 1500);
+        }
+
+        function updateSystem() {
+            alert('✨ 更新檔下載完成！\\n系統將自動重新啟動以套用最新版本。');
+            // 強制重新載入網頁 (清除快取)
+            window.location.reload(true);
         }
 
         // 初始化
