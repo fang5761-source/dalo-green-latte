@@ -127,12 +127,23 @@
             color: var(--wabi-gold);
         }
 
+        /* 新增：大樂頂部對話泡泡 */
+        .top-speech-bubble {
+            background: rgba(255, 252, 245, 0.95);
+            border-radius: 20px 20px 20px 4px; /* 特殊圓角，尾巴朝向左下方的大樂 */
+            padding: 14px 18px;
+            box-shadow: 0 8px 24px rgba(92, 74, 51, 0.12);
+            border: 1px solid var(--wabi-gold);
+            max-width: 82%;
+            position: relative;
+        }
+
         /* ==================== 首頁樣式 (歸處) ==================== */
-        .hero-container { position: relative; height: 320px; width: 100%; flex-shrink: 0; }
-        /* 魔法裁切：高度大幅縮減至 320px，對焦點移至 25%，把主要畫面空間還給功能按鈕 */
-        .hero-image { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
-        .hero-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 150px; background: linear-gradient(to bottom, transparent, var(--wabi-cream)); }
-        .wabi-bubble { background: rgba(255, 252, 245, 0.95); border-radius: 16px; padding: 14px 16px; box-shadow: 0 8px 24px rgba(92, 74, 51, 0.08); position: relative; border: 1px solid var(--wabi-gold); margin-bottom: 8px; }
+        .hero-container { position: relative; height: 260px; width: 100%; flex-shrink: 0; }
+        /* 魔法裁切：高度大幅縮減至 260px，對焦點微調至 15% */
+        .hero-image { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+        .hero-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 80px; background: linear-gradient(to bottom, transparent, var(--wabi-cream)); }
+        
         .ceramic-card { background: rgba(255, 252, 245, 0.92); border-radius: 24px; box-shadow: 0 8px 20px rgba(43, 58, 74, 0.06); border: 1px solid rgba(255, 255, 255, 0.6); transition: all 0.2s; }
         .ceramic-card:active { transform: scale(0.96); }
 
@@ -166,37 +177,33 @@
         <!-- 畫面一：首頁 (歸處) -->
         <!-- ========================================== -->
         <div id="screen-home" class="screen active">
-            <!-- 頂部資訊區 -->
-            <div class="absolute top-0 left-0 right-0 z-50 px-6 pt-10 flex justify-between items-center pointer-events-none">
-                <div class="flex items-center gap-3 pointer-events-auto bg-[var(--wabi-navy)] text-[var(--wabi-gold)] px-4 py-2 rounded-full shadow-lg border border-[var(--wabi-gold)]/30">
-                    <i class="fa-solid fa-leaf"></i>
-                    <span class="font-bold text-sm tracking-widest" id="userNameDisplay">芳姊姊</span>
-                </div>
-                <!-- 設定齒輪按鈕 -->
-                <button onclick="switchScreen('settings')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg pointer-events-auto border border-[var(--wabi-gold)]/30 active:scale-90 transition-transform">
-                    <i class="fa-solid fa-gear text-[var(--wabi-gold)]"></i>
-                </button>
-            </div>
-
             <!-- 英雄區域 -->
             <div class="hero-container">
                 <!-- 更新為姊姊超可愛的直式大樂圖片 hero.png -->
                 <img src="hero.png" onerror="this.src='https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&q=80&w=800'" alt="大樂管家在廚房" class="hero-image">
                 <div class="hero-overlay"></div>
                 
-                <!-- 大樂問候語 (精簡版) -->
-                <div class="absolute bottom-4 left-5 right-5 z-10">
-                    <div class="wabi-bubble">
+                <!-- 頂部資訊區：對話泡泡與設定按鈕 -->
+                <div class="absolute top-0 left-0 right-0 z-50 px-5 pt-8 flex items-start justify-between pointer-events-none">
+                    
+                    <!-- 大樂對話泡泡 (取代原有的 芳姊姊 tag) -->
+                    <div class="top-speech-bubble pointer-events-auto">
                         <p class="text-[var(--wabi-brown)] font-medium leading-relaxed text-sm">
                             姊姊早安！今天有點涼 🌬️ 水溫已設定 40 度。<br>
                             <span class="text-[var(--wabi-navy)] font-bold text-base block mt-1">準備好跟我一起「打鐵」了嗎？</span>
                         </p>
                     </div>
-                    <!-- 平和值狀態 -->
-                    <div class="flex gap-2">
-                        <div class="bg-[var(--wabi-navy)] text-[var(--wabi-gold)] px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 shadow-md">
-                            <i class="fa-solid fa-temperature-three-quarters"></i> 今日平和 <span id="peaceScore">0</span>
-                        </div>
+                    
+                    <!-- 設定齒輪按鈕 -->
+                    <button onclick="switchScreen('settings')" class="w-10 h-10 shrink-0 rounded-full bg-white flex items-center justify-center shadow-lg pointer-events-auto border border-[var(--wabi-gold)]/30 active:scale-90 transition-transform ml-3">
+                        <i class="fa-solid fa-gear text-[var(--wabi-gold)]"></i>
+                    </button>
+                </div>
+
+                <!-- 平和值狀態 (移至左下角) -->
+                <div class="absolute bottom-4 left-5 z-10">
+                    <div class="bg-[var(--wabi-navy)] text-[var(--wabi-gold)] px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 shadow-md border border-[var(--wabi-gold)]/30">
+                        <i class="fa-solid fa-temperature-three-quarters"></i> 今日平和 <span id="peaceScore">0</span>
                     </div>
                 </div>
             </div>
@@ -216,25 +223,25 @@
                 </button>
 
                 <div class="grid grid-cols-2 gap-4">
-                    <!-- 進入採買頁 -->
+                    <!-- 進入採買頁 (放大圖示與文字) -->
                     <button onclick="switchScreen('shopping')" class="ceramic-card p-4 flex flex-col gap-3 text-left">
-                        <div class="w-10 h-10 rounded-xl bg-[var(--wabi-cream)] flex items-center justify-center text-[var(--wabi-green)] text-lg border border-[var(--wabi-gold)]/20 shadow-inner">
+                        <div class="w-12 h-12 rounded-xl bg-[var(--wabi-cream)] flex items-center justify-center text-[var(--wabi-green)] text-xl border border-[var(--wabi-gold)]/20 shadow-inner">
                             <i class="fa-solid fa-basket-shopping"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-md text-[var(--wabi-brown)]">魔法小口袋</h3>
-                            <p class="text-[var(--wabi-gold)] text-[10px] opacity-80 mt-1">冰箱管理與採買</p>
+                            <h3 class="font-bold text-base text-[var(--wabi-brown)]">魔法小口袋</h3>
+                            <p class="text-[var(--wabi-gold)] text-[11px] opacity-80 mt-0.5">冰箱管理與採買</p>
                         </div>
                     </button>
 
-                    <!-- 進入 detective 畫面 -->
+                    <!-- 進入 detective 畫面 (放大圖示與文字) -->
                     <button onclick="switchScreen('detective')" class="ceramic-card p-4 flex flex-col gap-3 text-left transition-all active:scale-95">
-                        <div class="w-10 h-10 rounded-xl bg-[var(--wabi-cream)] flex items-center justify-center text-[var(--wabi-green)] text-lg border border-[var(--wabi-gold)]/20 shadow-inner">
+                        <div class="w-12 h-12 rounded-xl bg-[var(--wabi-cream)] flex items-center justify-center text-[var(--wabi-green)] text-xl border border-[var(--wabi-gold)]/20 shadow-inner">
                             <i class="fa-solid fa-magnifying-glass-chart"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-md text-[var(--wabi-brown)]">體質偵探</h3>
-                            <p class="text-[var(--wabi-gold)] text-[10px] opacity-80 mt-1">探索身體的流動</p>
+                            <h3 class="font-bold text-base text-[var(--wabi-brown)]">體質偵探</h3>
+                            <p class="text-[var(--wabi-gold)] text-[11px] opacity-80 mt-0.5">探索身體的流動</p>
                         </div>
                     </button>
                 </div>
